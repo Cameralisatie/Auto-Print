@@ -18,6 +18,7 @@ const record = {
     "E6 TOTAL": 0,
     "Dropbox Location": "IN-STORE",
     "Notes": "Test label - do not process",
+    "BARCODE": "8712345678901",
   },
 };
 
