@@ -1,6 +1,5 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { buildLabelPdf } from "../src/label.js";
-import { DEFAULT_TEMPLATE } from "../src/default-template.js";
 
 const record = {
   id: "recSample",
@@ -13,18 +12,18 @@ const record = {
     "Film Development": "C41",
     "Your negatives": "RETURN",
     "CUT NEGATIVES?": "YES",
+    "HALF FRAME": "NO",
+    "BORDERS": "YES",
     "FORMAT": "35MM",
+    "TIFF": "YES",
     "C41 TOTAL": 3,
     "BW TOTAL": 1,
     "E6 TOTAL": 0,
     "Dropbox Location": "IN-STORE",
     "Notes": "Test label - do not process",
+    "BARCODE": "8712345678901",
   },
 };
 
 await mkdir("output/pdf", { recursive: true });
-await writeFile("output/pdf/sample-airtable-label.pdf", buildLabelPdf(record, {
-  widthMm: DEFAULT_TEMPLATE.widthMm,
-  heightMm: DEFAULT_TEMPLATE.heightMm,
-  template: DEFAULT_TEMPLATE,
-}));
+await writeFile("output/pdf/generated-label-preview.pdf", await buildLabelPdf(record));

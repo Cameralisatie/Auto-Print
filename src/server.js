@@ -8,7 +8,9 @@ const json = (res, status, body) => { res.writeHead(status, { "content-type": "a
 
 const server = http.createServer(async (req, res) => {
   if (req.method === "GET" && req.url === "/health") return json(res, 200, { ok: true });
-  if (req.method !== "POST" || req.url !== "/webhooks/airtable") return json(res, 404, { error: "Not found" });
+  const isPrint = req.method === "POST" && req.url === "/webhooks/airtable";
+  const isReprint = req.method === "POST" && req.url === "/webhooks/airtable/reprint";
+  if (!isPrint && !isReprint) return json(res, 404, { error: "Not found" });
   if (!validWebhookSecret(req.headers["x-webhook-secret"], cfg.webhookSecret)) return json(res, 401, { error: "Unauthorized" });
 
   try {
@@ -22,7 +24,7 @@ const server = http.createServer(async (req, res) => {
     const { recordId } = JSON.parse(Buffer.concat(chunks).toString("utf8"));
     if (typeof recordId !== "string" || !recordId.trim()) return json(res, 400, { error: "Missing recordId" });
 
-    return json(res, 200, await processRecord(cfg, recordId));
+    return json(res, 200, await processRecord(cfg, recordId, { reprint: isReprint }));
   } catch (error) {
     console.error(error);
     return json(res, 500, { error: error instanceof Error ? error.message : String(error) });
