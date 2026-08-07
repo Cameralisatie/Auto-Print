@@ -44,6 +44,24 @@ LABEL_HEIGHT_MM=100
 
 After changing either value, redeploy the Vercel project.
 
+## Visual label designer
+
+Open `/designer` on the deployed app. Enter the `DESIGNER_SECRET`, then drag
+Airtable fields onto the label, select an item to edit its position and style,
+and choose **Publish design**. New print jobs immediately use the published
+template; no redeploy is required. Each save creates a version that can be
+restored from the left sidebar.
+
+Required Vercel variables:
+
+```dotenv
+DESIGNER_SECRET=replace-with-a-different-long-random-value
+DATABASE_URL=provided-automatically-by-the-Neon-Vercel-integration
+```
+
+Keep `DESIGNER_SECRET` different from `WEBHOOK_SECRET`. The designer secret is
+stored only in the browser session and sent to the protected designer APIs.
+
 ## Airtable Automation
 
 Trigger: **When record matches conditions**
