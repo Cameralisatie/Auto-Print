@@ -44,16 +44,13 @@ LABEL_HEIGHT_MM=100
 
 After changing either value, redeploy the Vercel project.
 
-## Illustrator label workflow
+## Label design
 
-The app prints directly on top of `assets/label-template.pdf`. Edit the artwork
-in Adobe Illustrator on an exact **62 x 100 mm** artboard, export it as PDF, and
-replace that file under the same name. Keep the boxes in the same positions so
-the Airtable values remain aligned. No Acrobat form fields are required.
-
-Do not add crop marks, bleed, page scaling, or printer marks. After replacing
-the PDF, run `npm run sample` and inspect
-`output/pdf/generated-label-preview.pdf` before deploying.
+The complete 62 x 100 mm label is generated in `src/label.js`, including the
+layout, Airtable values, Code 128 barcode, and Camera-Lisatie logo. It does not
+depend on an Illustrator or Acrobat template. Replace
+`assets/logo-lab-zwart.png` to update the logo, then run `npm run sample` and
+inspect `output/pdf/generated-label-preview.pdf` before deploying.
 
 ## Airtable Automation
 
@@ -80,7 +77,21 @@ if (!response.ok) throw new Error(await response.text());
 output.set("result", await response.json());
 ```
 
-PrintNode's idempotency key uses the Airtable record ID, so retries do not create another print job. To intentionally reprint the same record, use PrintNode's interface for now; a dedicated reprint endpoint can be added later.
+PrintNode's idempotency key uses the Airtable record ID, so retries to the normal
+endpoint do not create another print job.
+
+## Reprint an order
+
+Send the same authenticated request to the reprint endpoint:
+
+```text
+POST https://YOUR-PROJECT.vercel.app/webhooks/airtable/reprint
+```
+
+Use the same `x-webhook-secret` header and `{ "recordId": "rec..." }` JSON body.
+Each request deliberately creates a fresh PrintNode job, while the normal
+`/webhooks/airtable` endpoint remains protected against duplicate printing.
+The Airtable record must still have `Dropbox Location` set to `IN-STORE`.
 
 ## Label fields
 
