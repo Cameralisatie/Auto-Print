@@ -1,4 +1,4 @@
-export async function createPrintJob(cfg, { recordId, title, pdf, idempotencyKey = `airtable-${recordId}` }) {
+export async function createPrintJob(cfg, { title, pdf }) {
   const options = { copies: cfg.copies };
   if (cfg.paper) options.paper = cfg.paper;
   if (cfg.bin) options.bin = cfg.bin;
@@ -8,7 +8,6 @@ export async function createPrintJob(cfg, { recordId, title, pdf, idempotencyKey
     headers: {
       Authorization: `Basic ${Buffer.from(`${cfg.printNodeApiKey}:`).toString("base64")}`,
       "Content-Type": "application/json",
-      "X-Idempotency-Key": idempotencyKey,
     },
     body: JSON.stringify({
       printerId: cfg.printNodePrinterId,

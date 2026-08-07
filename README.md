@@ -77,21 +77,10 @@ if (!response.ok) throw new Error(await response.text());
 output.set("result", await response.json());
 ```
 
-PrintNode's idempotency key uses the Airtable record ID, so retries to the normal
-endpoint do not create another print job.
-
-## Reprint an order
-
-Send the same authenticated request to the reprint endpoint:
-
-```text
-POST https://YOUR-PROJECT.vercel.app/webhooks/airtable/reprint
-```
-
-Use the same `x-webhook-secret` header and `{ "recordId": "rec..." }` JSON body.
-Each request deliberately creates a fresh PrintNode job, while the normal
-`/webhooks/airtable` endpoint remains protected against duplicate printing.
-The Airtable record must still have `Dropbox Location` set to `IN-STORE`.
+Every authenticated request to `/webhooks/airtable` creates a new PrintNode
+job, even when the same Airtable record ID was printed before. This allows the
+existing Make scenario to reprint an order without a second endpoint or
+scenario. Be aware that automatic retries from Make also create another label.
 
 ## Label fields
 
