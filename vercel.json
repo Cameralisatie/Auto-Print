@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
+    { "source": "/designer", "destination": "/designer.html" },
     { "source": "/health", "destination": "/api/health" },
     { "source": "/webhooks/airtable", "destination": "/api/webhooks/airtable" }
   ]

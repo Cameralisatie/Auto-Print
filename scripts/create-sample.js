@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { buildLabelPdf } from "../src/label.js";
+import { DEFAULT_TEMPLATE } from "../src/default-template.js";
 
 const record = {
   id: "recSample",
@@ -22,4 +23,8 @@ const record = {
 };
 
 await mkdir("output/pdf", { recursive: true });
-await writeFile("output/pdf/sample-airtable-label.pdf", buildLabelPdf(record));
+await writeFile("output/pdf/sample-airtable-label.pdf", buildLabelPdf(record, {
+  widthMm: DEFAULT_TEMPLATE.widthMm,
+  heightMm: DEFAULT_TEMPLATE.heightMm,
+  template: DEFAULT_TEMPLATE,
+}));

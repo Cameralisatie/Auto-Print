@@ -1,6 +1,7 @@
 import { getAirtableRecord } from "./airtable.js";
 import { buildLabelPdf } from "./label.js";
 import { createPrintJob } from "./printnode.js";
+import { getTemplateOrDefault } from "./templates.js";
 
 export async function processRecord(cfg, recordId) {
   const record = await getAirtableRecord(cfg, recordId.trim());
@@ -9,12 +10,14 @@ export async function processRecord(cfg, recordId) {
   }
 
   const order = String(record.fields?.["Job orders"] || record.id);
+  const template = await getTemplateOrDefault();
   const result = await createPrintJob(cfg, {
     recordId: record.id,
     title: `Order ${order}`,
     pdf: buildLabelPdf(record, {
-      widthMm: cfg.labelWidthMm,
-      heightMm: cfg.labelHeightMm,
+      widthMm: template.widthMm || cfg.labelWidthMm,
+      heightMm: template.heightMm || cfg.labelHeightMm,
+      template,
     }),
   });
   return { ok: true, ...result, recordId: record.id };
