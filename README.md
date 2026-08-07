@@ -33,7 +33,16 @@ Use this URL in Make's HTTP module:
 https://YOUR-PROJECT.vercel.app/webhooks/airtable
 ```
 
-The PDF uses the same physical proportions as 385 x 574 dots at 203 DPI: approximately 48 x 72 mm. Set the Brother driver to the closest matching continuous-roll/custom paper size with scaling disabled. The QL-800 and QL-1100 have different supported roll widths, so validate the driver paper selection before enabling the Airtable automation.
+The PDF defaults to **62 x 100 mm** for the QL-800 test printer. Set the Brother driver to the 62 x 100 mm paper size with scaling disabled. The QL-800 and QL-1100 support different rolls, so validate the driver paper selection before enabling the Airtable automation.
+
+The page dimensions can be changed in Vercel without changing code:
+
+```dotenv
+LABEL_WIDTH_MM=62
+LABEL_HEIGHT_MM=100
+```
+
+After changing either value, redeploy the Vercel project.
 
 ## Airtable Automation
 
