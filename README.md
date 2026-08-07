@@ -44,23 +44,16 @@ LABEL_HEIGHT_MM=100
 
 After changing either value, redeploy the Vercel project.
 
-## Visual label designer
+## Illustrator label workflow
 
-Open `/designer` on the deployed app. Enter the `DESIGNER_SECRET`, then drag
-Airtable fields onto the label, select an item to edit its position and style,
-and choose **Publish design**. New print jobs immediately use the published
-template; no redeploy is required. Each save creates a version that can be
-restored from the left sidebar.
+Create the label artwork in Adobe Illustrator with an exact **62 x 100 mm**
+artboard and export it as a PDF. To make Airtable values fillable, open the PDF
+in Adobe Acrobat Pro, choose **Prepare a form**, and add text fields whose names
+match the Airtable field names. Keep a copy of the original `.ai` source file.
 
-Required Vercel variables:
-
-```dotenv
-DESIGNER_SECRET=replace-with-a-different-long-random-value
-DATABASE_URL=provided-automatically-by-the-Neon-Vercel-integration
-```
-
-Keep `DESIGNER_SECRET` different from `WEBHOOK_SECRET`. The designer secret is
-stored only in the browser session and sent to the protected designer APIs.
+The app currently continues using its built-in 62 x 100 mm label until a
+fillable Illustrator/Acrobat PDF is added to the repository. Do not add crop
+marks, bleed, page scaling, or printer marks to the exported template.
 
 ## Airtable Automation
 

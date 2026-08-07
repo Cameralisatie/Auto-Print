@@ -11,8 +11,5 @@
     "start": "node src/server.js",
     "test": "node --test",
     "sample": "node scripts/create-sample.js"
-  },
-  "dependencies": {
-    "@neondatabase/serverless": "^1.1.0"
   }
 }

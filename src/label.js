@@ -17,41 +17,6 @@ function date(value) {
   }).format(parsed);
 }
 
-function elementValue(element, record) {
-  const fields = record.fields || {};
-  if (element.type === "recordId") return record.id;
-  if (element.type === "createdTime") return date(record.createdTime);
-  if (element.type === "text") return element.text || "";
-  if (element.type === "combined") return (element.fields || []).map((name) => clean(fields[name])).filter(Boolean).join(element.separator || " ") || "-";
-  return clean(fields[element.field]) || "-";
-}
-
-function templateCommands(template, record, pageWidth, pageHeight) {
-  const commands = ["0 G", "0.55 w"];
-  for (const element of template.elements || []) {
-    const x = mmToPt(Number(element.x) || 0);
-    const top = pageHeight - mmToPt(Number(element.y) || 0);
-    const width = mmToPt(Math.max(1, Number(element.width) || 10));
-    const height = mmToPt(Math.max(1, Number(element.height) || 6));
-    const fontSize = Math.max(4, Math.min(36, Number(element.fontSize) || 8));
-    if (element.border !== false) commands.push(`${x.toFixed(2)} ${(top - height).toFixed(2)} ${width.toFixed(2)} ${height.toFixed(2)} re S`);
-    if (element.label) commands.push(`BT /F1 4 Tf ${(x + 2).toFixed(2)} ${(top - 6).toFixed(2)} Td (${pdfText(element.label).slice(0, 32)}) Tj ET`);
-    const value = pdfText(elementValue(element, record));
-    const usableWidth = Math.max(4, width - 4);
-    const charsPerLine = Math.max(1, Math.floor(usableWidth / (fontSize * 0.52)));
-    const maxLines = element.wrap ? Math.max(1, Math.floor((height - 9) / (fontSize + 2))) : 1;
-    const font = element.bold === false ? "F1" : "F2";
-    for (let line = 0; line < maxLines; line += 1) {
-      const chunk = value.slice(line * charsPerLine, (line + 1) * charsPerLine);
-      if (!chunk) break;
-      const baseline = top - 8 - fontSize - line * (fontSize + 2);
-      if (baseline < top - height + 2) break;
-      commands.push(`BT /${font} ${fontSize} Tf ${(x + 2).toFixed(2)} ${baseline.toFixed(2)} Td (${chunk}) Tj ET`);
-    }
-  }
-  return commands;
-}
-
 export function buildLabelPdf(record, options = {}) {
   const pageWidth = mmToPt(options.widthMm ?? DEFAULT_LABEL_WIDTH_MM);
   const pageHeight = mmToPt(options.heightMm ?? DEFAULT_LABEL_HEIGHT_MM);
@@ -64,11 +29,7 @@ export function buildLabelPdf(record, options = {}) {
   const f = record.fields || {};
   const order = clean(f["Job orders"]) || record.id;
   const customer = [clean(f["First Name"]), clean(f["Last Name"])].filter(Boolean).join(" ") || "-";
-  let commands;
-  if (options.template?.elements) {
-    commands = templateCommands(options.template, record, pageWidth, pageHeight);
-  } else {
-    commands = [
+  const commands = [
     "q",
     `${scale.toFixed(6)} 0 0 ${scale.toFixed(6)} ${offsetX.toFixed(2)} ${offsetY.toFixed(2)} cm`,
     "0 G",
@@ -112,7 +73,6 @@ export function buildLabelPdf(record, options = {}) {
   label(7, 36, "RECORD"); value(7, 25, record.id, 6, 22);
   label(72, 36, "DROPBOX"); value(72, 25, clean(f["Dropbox Location"]) || "-", 7, 14);
   commands.push("Q");
-  }
 
   const stream = commands.join("\n");
   const objects = [
