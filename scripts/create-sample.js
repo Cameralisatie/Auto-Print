@@ -26,4 +26,4 @@ const record = {
 };
 
 await mkdir("output/pdf", { recursive: true });
-await writeFile("output/pdf/sample-airtable-label.pdf", buildLabelPdf(record));
+await writeFile("output/pdf/generated-label-preview.pdf", await buildLabelPdf(record));

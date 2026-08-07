@@ -46,14 +46,14 @@ After changing either value, redeploy the Vercel project.
 
 ## Illustrator label workflow
 
-Create the label artwork in Adobe Illustrator with an exact **62 x 100 mm**
-artboard and export it as a PDF. To make Airtable values fillable, open the PDF
-in Adobe Acrobat Pro, choose **Prepare a form**, and add text fields whose names
-match the Airtable field names. Keep a copy of the original `.ai` source file.
+The app prints directly on top of `assets/label-template.pdf`. Edit the artwork
+in Adobe Illustrator on an exact **62 x 100 mm** artboard, export it as PDF, and
+replace that file under the same name. Keep the boxes in the same positions so
+the Airtable values remain aligned. No Acrobat form fields are required.
 
-The app currently continues using its built-in 62 x 100 mm label until a
-fillable Illustrator/Acrobat PDF is added to the repository. Do not add crop
-marks, bleed, page scaling, or printer marks to the exported template.
+Do not add crop marks, bleed, page scaling, or printer marks. After replacing
+the PDF, run `npm run sample` and inspect
+`output/pdf/generated-label-preview.pdf` before deploying.
 
 ## Airtable Automation
 

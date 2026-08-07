@@ -11,5 +11,8 @@
     "start": "node src/server.js",
     "test": "node --test",
     "sample": "node scripts/create-sample.js"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
   }
 }
