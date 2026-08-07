@@ -1,0 +1,75 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 136.55 203.59] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 1288 >>
+stream
+0 G
+0.6 w
+4 4 128.55172413793105 195.58620689655172 re S
+BT /F1 4 Tf 7 191 Td (ORDER) Tj ET
+BT /F2 11 Tf 7 180 Td (JOB-1042) Tj ET
+BT /F1 4 Tf 78 191 Td (ROLLS) Tj ET
+BT /F2 8 Tf 78 181 Td (4) Tj ET
+BT /F1 4 Tf 102 191 Td (DATE) Tj ET
+BT /F2 5 Tf 102 181 Td (07-08-2026) Tj ET
+5 175 m 131.55 175 l S
+BT /F1 4 Tf 7 168 Td (CUSTOMER) Tj ET
+BT /F2 8 Tf 7 157 Td (Sample Customer) Tj ET
+5 151 m 131.55 151 l S
+68 151 m 68 45 l S
+BT /F1 4 Tf 7 142 Td (DEVELOPMENT) Tj ET
+BT /F2 7 Tf 7 131 Td (C41) Tj ET
+5 125 m 68 125 l S
+BT /F1 4 Tf 7 116 Td (NEGATIVES) Tj ET
+BT /F2 7 Tf 7 105 Td (RETURN) Tj ET
+5 99 m 68 99 l S
+BT /F1 4 Tf 7 90 Td (CUT?) Tj ET
+BT /F2 7 Tf 7 79 Td (YES) Tj ET
+5 73 m 68 73 l S
+BT /F1 4 Tf 7 64 Td (FORMAT) Tj ET
+BT /F2 7 Tf 7 53 Td (35MM) Tj ET
+BT /F1 4 Tf 72 142 Td (C41 / BW / E6) Tj ET
+BT /F2 8 Tf 72 131 Td (3 / 1 / 0) Tj ET
+68 119 m 131.55 119 l S
+BT /F1 4 Tf 72 112 Td (LOCATION) Tj ET
+BT /F2 8 Tf 72 101 Td (IN-STORE) Tj ET
+68 93 m 131.55 93 l S
+BT /F1 4 Tf 72 86 Td (NOTES) Tj ET
+BT /F2 6 Tf 72 75 Td (Test label - do no) Tj ET
+BT /F2 6 Tf 72 66 Td (t process) Tj ET
+BT /F2 6 Tf 72 57 Td () Tj ET
+5 45 m 131.55 45 l S
+BT /F1 4 Tf 7 36 Td (RECORD) Tj ET
+BT /F2 6 Tf 7 25 Td (recSample) Tj ET
+BT /F1 4 Tf 72 36 Td (DROPBOX) Tj ET
+BT /F2 7 Tf 72 25 Td (IN-STORE) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000257 00000 n 
+0000001597 00000 n 
+0000001667 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+1742
+%%EOF
