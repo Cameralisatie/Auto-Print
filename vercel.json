@@ -2,7 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     { "source": "/health", "destination": "/api/health" },
-    { "source": "/webhooks/airtable", "destination": "/api/webhooks/airtable" },
-    { "source": "/webhooks/airtable/reprint", "destination": "/api/webhooks/reprint" }
+    { "source": "/webhooks/airtable", "destination": "/api/webhooks/airtable" }
   ]
 }
