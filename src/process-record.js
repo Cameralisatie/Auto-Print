@@ -11,7 +11,10 @@ export async function processRecord(cfg, recordId) {
   const order = String(record.fields?.["Job orders"] || record.id);
   const result = await createPrintJob(cfg, {
     title: `Order ${order}`,
-    pdf: await buildLabelPdf(record),
+    pdf: await buildLabelPdf(record, {
+      widthMm: cfg.labelWidthMm,
+      heightMm: cfg.labelHeightMm,
+    }),
   });
   return { ok: true, ...result, recordId: record.id };
 }

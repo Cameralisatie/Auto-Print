@@ -33,21 +33,22 @@ Use this URL in Make's HTTP module:
 https://YOUR-PROJECT.vercel.app/webhooks/airtable
 ```
 
-The PDF defaults to **62 x 100 mm** for the QL-800 test printer. Set the Brother driver to the 62 x 100 mm paper size with scaling disabled. The QL-800 and QL-1100 support different rolls, so validate the driver paper selection before enabling the Airtable automation.
+The PDF defaults to **102 x 152 mm** for the QL-1100. Set the Brother driver to the matching paper size with scaling disabled. The QL-800 and QL-1100 support different rolls, so validate the driver paper selection before enabling the Airtable automation.
 
 The page dimensions can be changed in Vercel without changing code:
 
 ```dotenv
-LABEL_WIDTH_MM=62
-LABEL_HEIGHT_MM=100
+LABEL_WIDTH_MM=102
+LABEL_HEIGHT_MM=152
 ```
 
 After changing either value, redeploy the Vercel project.
 
 ## Label design
 
-The complete 62 x 100 mm label is generated in `src/label.js`, including the
-layout, Airtable values, Code 128 barcode, and Camera-Lisatie logo. It does not
+The label is generated in `src/label.js` and scaled as vector artwork to the
+configured paper size, including the layout, Airtable values, Code 128 barcode,
+and Camera-Lisatie logo. It does not
 depend on an Illustrator or Acrobat template. Replace
 `assets/logo-lab-zwart.png` to update the logo, then run `npm run sample` and
 inspect `output/pdf/generated-label-preview.pdf` before deploying.

@@ -10,7 +10,7 @@ test("creates a code-generated label with the correct Brother roll size", async 
   const pdf = await PDFDocument.load(bytes);
   assert.equal(pdf.getPageCount(), 1);
   const { width, height } = pdf.getPage(0).getSize();
-  assert.ok(Math.abs(width - 175.75) < 0.02);
-  assert.ok(Math.abs(height - 283.46) < 0.02);
+  assert.ok(Math.abs(width - 289.13) < 0.02);
+  assert.ok(Math.abs(height - 430.87) < 0.02);
   assert.ok(bytes.length > 10_000);
 });

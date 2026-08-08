@@ -1,8 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { PDFDocument, StandardFonts, grayscale, rgb } from "pdf-lib";
 
-export const DEFAULT_LABEL_WIDTH_MM = 62;
-export const DEFAULT_LABEL_HEIGHT_MM = 100;
+export const DEFAULT_LABEL_WIDTH_MM = 102;
+export const DEFAULT_LABEL_HEIGHT_MM = 152;
+const DESIGN_WIDTH_MM = 62;
+const DESIGN_HEIGHT_MM = 100;
 const mm = (value) => (value / 25.4) * 72;
 const clean = (value) => Array.isArray(value) ? value.join(", ") : String(value ?? "").trim();
 
@@ -45,9 +47,14 @@ function wrapWords(value, maxCharacters, maxLines) {
   return lines.slice(0, maxLines);
 }
 
-export async function buildLabelPdf(record) {
+export async function buildLabelPdf(record, options = {}) {
+  const targetWidthMm = Number(options.widthMm ?? DEFAULT_LABEL_WIDTH_MM);
+  const targetHeightMm = Number(options.heightMm ?? DEFAULT_LABEL_HEIGHT_MM);
+  if (!Number.isFinite(targetWidthMm) || targetWidthMm <= 0 || !Number.isFinite(targetHeightMm) || targetHeightMm <= 0) {
+    throw new Error("Label dimensions must be positive numbers");
+  }
   const pdf = await PDFDocument.create();
-  const page = pdf.addPage([mm(DEFAULT_LABEL_WIDTH_MM), mm(DEFAULT_LABEL_HEIGHT_MM)]);
+  const page = pdf.addPage([mm(DESIGN_WIDTH_MM), mm(DESIGN_HEIGHT_MM)]);
   const { width, height } = page.getSize();
   const regular = await pdf.embedFont(StandardFonts.Helvetica);
   const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
@@ -167,5 +174,15 @@ export async function buildLabelPdf(record) {
       cursor += barWidth;
     });
   }
-  return Buffer.from(await pdf.save({ useObjectStreams: false }));
+  const designBytes = await pdf.save({ useObjectStreams: false });
+  if (targetWidthMm === DESIGN_WIDTH_MM && targetHeightMm === DESIGN_HEIGHT_MM) return Buffer.from(designBytes);
+
+  const finalizedDesign = await PDFDocument.load(designBytes);
+  const output = await PDFDocument.create();
+  const embedded = await output.embedPage(finalizedDesign.getPage(0));
+  const outputPage = output.addPage([mm(targetWidthMm), mm(targetHeightMm)]);
+  outputPage.drawPage(embedded, {
+    x: 0, y: 0, width: mm(targetWidthMm), height: mm(targetHeightMm),
+  });
+  return Buffer.from(await output.save({ useObjectStreams: false }));
 }
